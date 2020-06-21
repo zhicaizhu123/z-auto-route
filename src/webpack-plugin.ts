@@ -1,4 +1,3 @@
-import * as assert from 'assert'
 import * as fs from 'fs'
 import * as path from 'path'
 import { Compiler } from 'webpack'
@@ -13,9 +12,7 @@ namespace AutoRoutingPlugin {
 }
 
 class AutoRoutingPlugin {
-  constructor(private options: Options) {
-    assert(options.pages, '`pages` is required')
-  }
+  constructor(private options: Options) { }
 
   apply(compiler: Compiler) {
     const generate = () => {
@@ -26,7 +23,6 @@ class AutoRoutingPlugin {
       } else {
         to = path.join(__dirname, './routes.js')
       }
-      console.log('to', to)
 
       if (
         fs.existsSync(to) &&
@@ -40,9 +36,13 @@ class AutoRoutingPlugin {
 
     let watcher: any = null
 
-    compiler.hooks.done.tap(pluginName, () => {
+    compiler.hooks.afterPlugins.tap(pluginName, () => {
+      generate()
+    })
+
+    compiler.hooks.emit.tap(pluginName, () => {
       const chokidar = require('chokidar')
-      watcher = chokidar.watch(path.join(process.cwd(), this.options.pages), {
+      watcher = chokidar.watch(path.join(process.cwd(), this.options.pages || 'src/views'), {
         persistent: true,
       }).on('change', () => {
         generate()

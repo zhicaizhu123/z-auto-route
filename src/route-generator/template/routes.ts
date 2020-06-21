@@ -42,6 +42,7 @@ function createImport(
   dynamic: boolean,
   chunkNamePrefix: string
 ): string {
+  // 根据不同页面
   const isDynamic = typeof meta.route?.dynamic === 'boolean' ? meta.route.dynamic : dynamic
   const code = isDynamic
     ? `function ${meta.specifier}() { return import(/* webpackChunkName: "${chunkNamePrefix}${meta.chunkName}" */ '${meta.component}') }`

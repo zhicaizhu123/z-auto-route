@@ -5,23 +5,22 @@ import { createRoutes } from './template/routes'
 import { resolveRoutePaths } from './resolve'
 
 export interface GenerateConfig {
-  pages: string
+  pages?: string
   routePath?: string,
   importPrefix?: string
   dynamic?: boolean
   chunkNamePrefix?: string
-  nested?: boolean
   layout?: string
 }
 
 export function generateRoutes({
-  pages,
+  pages = 'src/views',
   importPrefix = '@/views/',
   dynamic = true,
   chunkNamePrefix = '',
   layout = '_layout.vue',
 }: GenerateConfig): string {
-  const patterns = ['**/*.vue', '!**/__*__.vue', '!**/__*__/**', '!**/components/**', `!**/${layout}`]
+  const patterns = ['**/*.vue', `!**/${layout}`]
 
   const layoutPaths = fg.sync(`**/${layout}`, {
     cwd: pages,

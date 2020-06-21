@@ -15,6 +15,7 @@ export interface PageMeta {
 }
 
 const routeBlockName = 'z-route'
+const rootPathLayoutName = 'z-root-route-page'
 
 export function resolveRoutePaths(
   layoutPaths: string[],
@@ -26,14 +27,28 @@ export function resolveRoutePaths(
   const map: NestedMap<string[]> = {}
 
   const splitedLayouts = layoutPaths.map((p) => p.split('/'))
-  splitedLayouts.forEach((path) => {
-    setToMap(map, pathToMapPath(path.slice(0, path.length - 1)), path)
-  })
+  const hasRootLayout = splitedLayouts.some(item => item.length === 1)
+  if (hasRootLayout) {
+    splitedLayouts.forEach((path) => {
+      let dir = path.slice(0, path.length - 1)
+      dir.unshift(rootPathLayoutName)
+      setToMap(map, pathToMapPath(dir), path)
+    })
+  } else {
+    splitedLayouts.forEach((path) => {
+      setToMap(map, pathToMapPath(path.slice(0, path.length - 1)), path)
+    })
+  }
+
 
   const splitted = paths.map((p) => p.split('/'))
   splitted.forEach((path) => {
     if (hasRouteBlock(path, readFile)) {
-      setToMap(map, pathToMapPath(path), path)
+      let dir = path
+      if (hasRootLayout) {
+        dir.unshift(rootPathLayoutName)
+      }
+      setToMap(map, pathToMapPath(dir), path)
     }
   })
 
@@ -65,6 +80,9 @@ function pathMapToMeta(
 ): PageMeta[] {
   if (map.value) {
     const path = map.value
+    if (path[0] === rootPathLayoutName) {
+      path.shift()
+    }
 
     const meta: PageMeta = {
       name: pathToName(path),

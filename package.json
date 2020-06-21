@@ -1,6 +1,6 @@
 {
   "name": "z-auto-route",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "zhicaizhu123@126.com",
   "description": "generate vue-router auto route",
   "keywords": [
@@ -15,12 +15,11 @@
   "typings": "index.d.ts",
   "files": [
     "lib",
-    "lib/routes.js",
     "index.d.ts"
   ],
   "scripts": {
-    "prepublishOnly": "npm run test && npm run clean && npm run build",
-    "clean": "rm -rf lib && echo export default [] > index.js",
+    "prepublishOnly": "npm run clean && npm run build",
+    "clean": "rm -rf lib",
     "build": "tsc -p src",
     "dev": "jest --watch",
     "lint": "tslint -p . && prettier --list-different \"{src,scripts,test}/**/*.{js,ts}\"",
@@ -28,7 +27,6 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.0",
-    "@types/jest": "^26.0.0",
     "@types/node": "^14.0.1",
     "@types/prettier": "^2.0.0",
     "@types/webpack": "^4.32.1",
@@ -38,7 +36,6 @@
     "jest": "^25.1.0",
     "prettier": "2.0.5",
     "tslint": "^5.18.0",
-    "tslint-config-ktsn": "^2.1.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.3",
     "vue": "^2.6.10",

@@ -1,8 +1,7 @@
 <z-route>
 {
-  "dynamic": false,
   "meta": {
-    "title": "子子页面"
+    "title": "子页面-line页面"
   }
 }
 </z-route>
