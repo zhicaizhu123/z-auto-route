@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "tslint-config-ktsn",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "no-eval": false
+  }
+}

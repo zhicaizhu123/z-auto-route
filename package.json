@@ -1,0 +1,73 @@
+{
+  "name": "tz-auto-route",
+  "version": "0.1.0",
+  "author": "zhicaizhu123@126.com",
+  "description": "Generate Vue Router routing automatically",
+  "keywords": [
+    "Vue",
+    "Vue Router",
+    "routing",
+    "auto generate",
+    "auto routing",
+    "webpack-plugin"
+  ],
+  "license": "MIT",
+  "main": "lib/routes.js",
+  "typings": "index.d.ts",
+  "files": [
+    "lib",
+    "lib/routes.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "prepublishOnly": "npm run test && npm run clean && npm run build",
+    "clean": "rm -rf lib && echo export default [] > index.js",
+    "build": "tsc -p src",
+    "dev": "jest --watch",
+    "lint": "tslint -p . && prettier --list-different \"{src,scripts,test}/**/*.{js,ts}\"",
+    "format": "prettier --write \"{src,scripts,test}/**/*.{js,ts}\"",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "/test/.+\\.spec\\.(js|ts)$",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/index.js",
+      "<rootDir>/test/fixtures/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "test/tsconfig.json"
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.1",
+    "@types/prettier": "^2.0.0",
+    "@types/fs-extra": "^8.0.0",
+    "@types/jest": "^26.0.0",
+    "@types/webpack": "^4.32.1",
+    "fast-glob": "^3.0.4",
+    "fs-extra": "^9.0.0",
+    "jest": "^25.1.0",
+    "prettier": "2.0.5",
+    "ts-jest": "^25.0.0",
+    "tslint": "^5.18.0",
+    "tslint-config-ktsn": "^2.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.5.3",
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.2",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.39.2"
+  },
+  "dependencies": {}
+}
