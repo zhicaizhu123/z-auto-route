@@ -1,13 +1,15 @@
 <z-route>
 {
   "meta": {
-    "title": "首页"
+    "title": "关于"
   }
 }
 </z-route>
 
 <template>
-  <div class>首页</div>
+  <div class="">
+    about
+  </div>
 </template>
 
 <script>

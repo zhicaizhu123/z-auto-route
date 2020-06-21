@@ -1,13 +1,17 @@
 <z-route>
 {
+  "dynamic": false,
   "meta": {
-    "title": "首页"
+    "title": "根布局页面"
   }
 }
 </z-route>
 
 <template>
-  <div class>首页</div>
+  <div class="">
+    <div>根布局页面</div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

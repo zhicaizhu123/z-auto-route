@@ -1,13 +1,16 @@
 <z-route>
 {
   "meta": {
-    "title": "首页"
+    "title": "子父页面"
   }
 }
 </z-route>
 
 <template>
-  <div class>首页</div>
+  <div class="">
+    <div>i am a children parent page</div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

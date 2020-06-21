@@ -1,13 +1,16 @@
 <z-route>
 {
+  "dynamic": false,
   "meta": {
-    "title": "首页"
+    "title": "子子页面"
   }
 }
 </z-route>
 
 <template>
-  <div class>首页</div>
+  <div class="">
+    子子页面
+  </div>
 </template>
 
 <script>
