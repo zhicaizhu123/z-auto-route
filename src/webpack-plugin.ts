@@ -15,13 +15,19 @@ namespace AutoRoutingPlugin {
 class AutoRoutingPlugin {
   constructor(private options: Options) {
     assert(options.pages, '`pages` is required')
-    assert(options.routePath, '`routePath` is required')
   }
 
   apply(compiler: Compiler) {
     const generate = () => {
       const code = generateRoutes(this.options)
-      const to = path.join(__dirname, './routes.js')
+      let to
+      if (this.options.routePath) {
+        to = path.join(process.cwd(), this.options.routePath)
+      } else {
+        to = path.join(__dirname, './routes.js')
+      }
+      console.log('to', to)
+
       if (
         fs.existsSync(to) &&
         fs.readFileSync(to, 'utf8').trim() === code.trim()

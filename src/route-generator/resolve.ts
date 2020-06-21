@@ -14,7 +14,7 @@ export interface PageMeta {
   route?: any
 }
 
-const routeBlockName = 'tz-route'
+const routeBlockName = 'z-route'
 
 export function resolveRoutePaths(
   layoutPaths: string[],

@@ -6,7 +6,7 @@ import { resolveRoutePaths } from './resolve'
 
 export interface GenerateConfig {
   pages: string
-  routePath: string,
+  routePath?: string,
   importPrefix?: string
   dynamic?: boolean
   chunkNamePrefix?: string
