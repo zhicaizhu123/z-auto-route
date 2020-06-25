@@ -20,18 +20,22 @@ export function generateRoutes({
   chunkNamePrefix = '',
   layout = '_layout.vue',
 }: GenerateConfig): string {
+  // 指定文件不需要生成路由配置
   const patterns = ['**/*.vue', `!**/${layout}`]
 
+  // 获取所有layout的文件路径
   const layoutPaths = fg.sync(`**/${layout}`, {
     cwd: pages,
     onlyFiles: true,
   })
 
+  // 获取所有需要路由配置的文件路径
   const pagePaths = fg.sync(patterns, {
     cwd: pages,
     onlyFiles: true,
   })
 
+  // 获取路由配置信息
   const metaList = resolveRoutePaths(
     layoutPaths,
     pagePaths,
@@ -42,5 +46,6 @@ export function generateRoutes({
     }
   )
 
+  // 返回需要写入路由文件的内容
   return createRoutes(metaList, dynamic, chunkNamePrefix)
 }

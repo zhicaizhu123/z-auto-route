@@ -29,6 +29,7 @@ export function resolveRoutePaths(
   const splitedLayouts = layoutPaths.map((p) => p.split('/'))
   const hasRootLayout = splitedLayouts.some(item => item.length === 1)
   if (hasRootLayout) {
+    // 判断是否是根模板文件
     splitedLayouts.forEach((path) => {
       let dir = path.slice(0, path.length - 1)
       dir.unshift(rootPathLayoutName)
@@ -44,6 +45,7 @@ export function resolveRoutePaths(
   const splitted = paths.map((p) => p.split('/'))
   splitted.forEach((path) => {
     if (hasRouteBlock(path, readFile)) {
+      // 判断是否有自定义块，如果有才生成相关信息
       let dir = path
       if (hasRootLayout) {
         dir.unshift(rootPathLayoutName)
@@ -95,6 +97,7 @@ function pathMapToMeta(
 
     const routeBlock = getRouteBlock(path, readFile)
     if (routeBlock) {
+      // 判断是否有自定义块，如果有才生成相关信息
       meta.route = tryParseCustomBlock(routeBlock.content, path, routeBlockName)
     }
 

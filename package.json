@@ -1,7 +1,6 @@
 {
   "name": "z-auto-route",
-  "version": "1.0.2",
-  "author": "zhicaizhu123@126.com",
+  "version": "1.0.3",
   "description": "generate vue-router auto route",
   "keywords": [
     "Vue",
@@ -11,6 +10,15 @@
     "auto routing",
     "webpack-plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhicaizhu123/z-auto-router.git"
+  },
+  "author": {
+    "name": "Peter Chu",
+    "email": "zhicaizhu123@126.com"
+  },
+  "license": "ISC",
   "main": "lib/routes.js",
   "typings": "index.d.ts",
   "files": [

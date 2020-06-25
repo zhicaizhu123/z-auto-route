@@ -34,12 +34,9 @@ function createMenus(list) {
 }
 
 createMenus(menus)
-
 generatePath(menus, '')
 
 export const menuRoutes = menus
-
-console.log(menuRoutes)
 
 const router = new VueRouter({
   mode: 'history',

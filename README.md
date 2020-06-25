@@ -55,6 +55,8 @@ npm i -S z-auto-route
 
 ```js
 // vue.config.js
+const ZAutoRoute = require('z-auto-route/lib/webpack-plugin')
+
 ...
   configureWebpack: (config) => {
     config.plugins = [
