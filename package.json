@@ -1,6 +1,6 @@
 {
   "name": "z-auto-route",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "zhicaizhu123@126.com",
   "description": "generate vue-router auto route",
   "keywords": [

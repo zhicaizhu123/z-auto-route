@@ -8,13 +8,6 @@ npm i -S z-auto-route
 
 ### webpack 配置项
 
-pages: string
-routePath?: string,
-importPrefix?: string
-dynamic?: boolean
-chunkNamePrefix?: string
-layout?: string
-
 | 属性            | 描述                                                                                           | 类型   | 是否必选 | 默认值         |
 | --------------- | ---------------------------------------------------------------------------------------------- | ------ | -------- | -------------- |
 | pages           | 需要自动生成文件的目录                                                                         | String | 否       |                | 'src/views' |
@@ -96,24 +89,45 @@ export default router
 
 #### 示例项目目录
 
+```
+|-- views
+  |-- _layout.vue // 全局布局组件
+  |-- homepage.vue // 首页
+  |-- system // 系统管理
+    |-- _layout.vue // 嵌套路由
+    |-- role // 角色管理
+      |-- index.vue
+    |-- user // 用户管理
+      |-- index
+      |-- _id // 用户详情
+        |-- index.vue
+```
+
 #### 示例生成路由结构
 
 ```js
 import _layout from '@/views/_layout.vue'
-function data__layout() {
+function system__layout() {
   return import(
-    /* webpackChunkName: "data-layout" */ '@/views/data/_layout.vue'
+    /* webpackChunkName: "system-layout" */ '@/views/system/_layout.vue'
   )
 }
-function data__id() {
-  return import(/* webpackChunkName: "data-id" */ '@/views/data/_id.vue')
+function system_role_index() {
+  return import(
+    /* webpackChunkName: "system-role-index" */ '@/views/system/role/index.vue'
+  )
 }
-function about() {
-  return import(/* webpackChunkName: "about" */ '@/views/about.vue')
+function system_user_index() {
+  return import(
+    /* webpackChunkName: "system-user-index" */ '@/views/system/user/index.vue'
+  )
 }
-function home() {
-  return import(/* webpackChunkName: "home" */ '@/views/home.vue')
+function system_user__id_index() {
+  return import(
+    /* webpackChunkName: "system-user-id-index" */ '@/views/system/user/_id/index.vue'
+  )
 }
+import homepage from '@/views/homepage.vue'
 
 export default [
   {
@@ -121,45 +135,63 @@ export default [
     path: '/',
     component: _layout,
     meta: {
-      title: '根布局页面',
+      title: '布局组件',
+      hide: true,
     },
     dynamic: false,
     children: [
       {
-        name: 'data-layout',
-        path: '/data',
-        component: data__layout,
+        name: 'system-layout',
+        path: '/system',
+        component: system__layout,
         meta: {
-          title: '子页面',
+          title: '系统管理',
         },
+        sortIndex: 0,
         children: [
           {
-            name: 'data-id',
-            path: ':id?',
-            component: data__id,
+            name: 'system-role',
+            path: 'role',
+            component: system_role_index,
             meta: {
-              title: '子页面-动态路由页面',
+              title: '角色管理',
+            },
+          },
+          {
+            name: 'system-user',
+            path: 'user',
+            component: system_user_index,
+            meta: {
+              title: '用户管理',
+            },
+          },
+          {
+            name: 'system-user-id',
+            path: 'user/:id',
+            component: system_user__id_index,
+            meta: {
+              title: '用户详情',
+              hide: true,
             },
           },
         ],
       },
       {
-        name: 'about',
-        path: '/about',
-        component: about,
-        meta: {
-          title: '关于',
-        },
-      },
-      {
-        name: 'home',
-        path: '/home',
-        component: home,
+        name: 'homepage',
+        path: '/homepage',
+        component: homepage,
         meta: {
           title: '首页',
         },
+        dynamic: false,
+        sortIndex: -1,
       },
     ],
   },
 ]
 ```
+
+#### 效果图
+
+![image](https://note.youdao.com/yws/public/resource/1bd71e3d09ed1aee2763fe2efcb0e114/53A610CD1092485EBC58A191C13BFF59?ynotemdtimestamp=1593085785896)
+![image](https://note.youdao.com/yws/public/resource/1bd71e3d09ed1aee2763fe2efcb0e114/8874AB16BFD441CAA4C34E3977DB7625?ynotemdtimestamp=1593085785896)
