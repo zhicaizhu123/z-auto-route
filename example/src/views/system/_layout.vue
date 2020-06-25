@@ -1,13 +1,16 @@
 <z-route>
 {
+  "sortIndex": 0,
   "meta": {
-    "title": "首页"
+    "title": "系统管理"
   }
 }
 </z-route>
 
 <template>
-  <div class>首页</div>
+  <div class>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
