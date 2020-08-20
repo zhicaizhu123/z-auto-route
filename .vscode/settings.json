@@ -1,0 +1,5 @@
+{
+    "vetur.grammar.customBlocks": {
+        "z-route": "json"
+    }
+}
