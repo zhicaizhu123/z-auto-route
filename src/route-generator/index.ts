@@ -30,19 +30,21 @@ export function generateRoutes({
   })
 
   // 获取所有需要路由配置的文件路径
-  const pagePaths = fg.sync(patterns, {
+  const paths = fg.sync(patterns, {
     cwd: pages,
     onlyFiles: true,
   })
 
   // 获取路由配置信息
   const metaList = resolveRoutePaths(
-    layoutPaths,
-    pagePaths,
-    importPrefix,
-    layout,
-    (file) => {
-      return fs.readFileSync(path.join(pages, file), 'utf8')
+    {
+      layoutPaths,
+      paths,
+      importPrefix,
+      layout,
+      readFile: (file) => {
+        return fs.readFileSync(path.join(pages, file), 'utf8')
+      }
     }
   )
 

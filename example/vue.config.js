@@ -1,5 +1,5 @@
 const os = require('os')
-const ZAutoRoute = require('z-auto-route/lib/webpack-plugin')
+const ZAutoRoute = require('../lib/webpack-plugin')
 
 module.exports = {
   configureWebpack: (config) => {

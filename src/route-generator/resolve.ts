@@ -14,16 +14,42 @@ export interface PageMeta {
   route?: any
 }
 
+interface RoutePathsParams {
+  layoutPaths: string[]
+  paths: string[]
+  importPrefix: string
+  layout: string
+  readFile: (path: string) => string
+}
+
+interface MapToMetaParams {
+  map: NestedMap<string[]>
+  importPrefix: string
+  readFile: (path: string) => string
+  parentDepth: number
+  layout: string
+}
+
+interface MapChildrenToMetaParams {
+  children: Map<string, NestedMap<string[]>>
+  importPrefix: string
+  readFile: (path: string) => string
+  parentDepth: number
+  layout: string
+}
+
 const routeBlockName = 'z-route'
 const rootPathLayoutName = 'z-root-route-page'
 
-export function resolveRoutePaths(
-  layoutPaths: string[],
-  paths: string[],
-  importPrefix: string,
-  layout: string,
-  readFile: (path: string) => string
-): PageMeta[] {
+export function resolveRoutePaths(params: RoutePathsParams): PageMeta[] {
+  const {
+    layoutPaths,
+    paths,
+    importPrefix,
+    layout,
+    readFile
+  }: RoutePathsParams = params
+
   const map: NestedMap<string[]> = {}
 
   const splitedLayouts = layoutPaths.map((p) => p.split('/'))
@@ -54,7 +80,13 @@ export function resolveRoutePaths(
     }
   })
 
-  return pathMapToMeta(map, importPrefix, readFile, 0, layout)
+  return pathMapToMeta({
+    map,
+    importPrefix,
+    readFile,
+    layout,
+    parentDepth: 0,
+  })
 }
 
 // 获取自定义标签内容
@@ -73,13 +105,15 @@ function hasRouteBlock(path: string[], readFile: (path: string) => string) {
   return routeBlock && tryParseCustomBlock(routeBlock.content, path, routeBlockName)
 }
 
-function pathMapToMeta(
-  map: NestedMap<string[]>,
-  importPrefix: string,
-  readFile: (path: string) => string,
-  parentDepth: number = 0,
-  layout: string,
-): PageMeta[] {
+function pathMapToMeta(params: MapToMetaParams): PageMeta[] {
+  const {
+    map,
+    importPrefix,
+    readFile,
+    layout,
+    parentDepth = 0,
+  }: MapToMetaParams = params
+
   if (map.value) {
     const path = map.value
     if (path[0] === rootPathLayoutName) {
@@ -103,11 +137,13 @@ function pathMapToMeta(
 
     if (map.children) {
       meta.children = pathMapChildrenToMeta(
-        map.children,
-        importPrefix,
-        readFile,
-        meta.pathSegments.length,
-        layout
+        {
+          children: map.children,
+          importPrefix,
+          readFile,
+          parentDepth: meta.pathSegments.length,
+          layout
+        }
       )
     }
 
@@ -116,11 +152,13 @@ function pathMapToMeta(
 
   return map.children
     ? pathMapChildrenToMeta(
-      map.children,
-      importPrefix,
-      readFile,
-      parentDepth,
-      layout
+      {
+        children: map.children,
+        importPrefix,
+        readFile,
+        parentDepth,
+        layout
+      }
     )
     : []
 }
@@ -140,17 +178,25 @@ function routePathComparator(a: string[], b: string[]): number {
   return order !== 0 ? order : routePathComparator(a.slice(1), b.slice(1))
 }
 
-function pathMapChildrenToMeta(
-  children: Map<string, NestedMap<string[]>>,
-  importPrefix: string,
-  readFile: (path: string) => string,
-  parentDepth: number,
-  layout: string
-): PageMeta[] {
+function pathMapChildrenToMeta(params: MapChildrenToMetaParams): PageMeta[] {
+  const {
+    children,
+    importPrefix,
+    readFile,
+    parentDepth,
+    layout
+  }: MapChildrenToMetaParams = params
+
   return Array.from(children.values())
     .reduce<PageMeta[]>((acc, value) => {
       return acc.concat(
-        pathMapToMeta(value, importPrefix, readFile, parentDepth, layout)
+        pathMapToMeta({
+          map: value,
+          importPrefix,
+          readFile,
+          layout,
+          parentDepth,
+        })
       )
     }, [])
     .sort((a, b) => {
