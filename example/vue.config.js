@@ -8,6 +8,7 @@ module.exports = {
       new ZAutoRoute({
         pages: 'src/views',
         importPrefix: '@/views/',
+        customBlock: 'z-route'
       }),
     ]
   },

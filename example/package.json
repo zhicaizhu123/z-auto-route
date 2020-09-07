@@ -12,7 +12,7 @@
     "element-ui": "^2.13.2",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
-    "z-auto-route": "^1.0.0"
+    "z-auto-route": "^1.0.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
