@@ -42,7 +42,7 @@ class AutoRoutingPlugin {
 
     compiler.hooks.emit.tap(pluginName, () => {
       const chokidar = require('chokidar')
-      watcher = chokidar.watch(path.join(process.cwd(), this.options.pages || 'src/views'), {
+      watcher = chokidar.watch(path.join(process.cwd(), this.options.pages || 'src/views/**/*.vue'), {
         persistent: true,
       }).on('change', () => {
         generate()

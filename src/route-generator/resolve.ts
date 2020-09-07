@@ -19,6 +19,7 @@ interface RoutePathsParams {
   paths: string[]
   importPrefix: string
   layout: string
+  customBlock: string
   readFile: (path: string) => string
 }
 
@@ -38,8 +39,8 @@ interface MapChildrenToMetaParams {
   layout: string
 }
 
-const routeBlockName = 'z-route'
-const rootPathLayoutName = 'z-root-route-page'
+let routeBlockName = 'z-route'
+const rootPathLayoutName = 'root-route-page'
 
 export function resolveRoutePaths(params: RoutePathsParams): PageMeta[] {
   const {
@@ -47,8 +48,10 @@ export function resolveRoutePaths(params: RoutePathsParams): PageMeta[] {
     paths,
     importPrefix,
     layout,
+    customBlock,
     readFile
   }: RoutePathsParams = params
+  routeBlockName = customBlock
 
   const map: NestedMap<string[]> = {}
 
@@ -210,7 +213,11 @@ function tryParseCustomBlock(
   blockName: string
 ): any {
   try {
-    return JSON.parse(content)
+    let routeContent = eval("("+content+")")
+    if (typeof routeContent === 'function') {
+      routeContent = routeContent()
+    }
+    return routeContent
   } catch (err) {
     const joinedPath = filePath.join('/')
     console.error(`Invalid json format of <${blockName}> content in ${joinedPath}\n`)

@@ -11,6 +11,7 @@ export interface GenerateConfig {
   dynamic?: boolean
   chunkNamePrefix?: string
   layout?: string
+  customBlock?: string
 }
 
 export function generateRoutes({
@@ -19,6 +20,7 @@ export function generateRoutes({
   dynamic = true,
   chunkNamePrefix = '',
   layout = '_layout.vue',
+  customBlock = 'z-route',
 }: GenerateConfig): string {
   // 指定文件不需要生成路由配置
   const patterns = ['**/*.vue', `!**/${layout}`]
@@ -42,6 +44,7 @@ export function generateRoutes({
       paths,
       importPrefix,
       layout,
+      customBlock,
       readFile: (file) => {
         return fs.readFileSync(path.join(pages, file), 'utf8')
       }

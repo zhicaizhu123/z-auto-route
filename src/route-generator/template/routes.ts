@@ -26,7 +26,10 @@ function createRoute(meta: PageMeta): string {
 
   const otherOptions = Object.keys(route)
     .filter(isAllowedRouteOption)
-    .map((key) => `,${key}: ${JSON.stringify(route[key])}`)
+    .map((key) => {
+      const content = eval(`(${route[key]})`)
+      return `,${key}: ${content}`
+    })
     .join(',').replace(',,', ',')
 
   return `
