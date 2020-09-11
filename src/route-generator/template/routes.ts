@@ -2,6 +2,7 @@ import * as prettier from 'prettier'
 import { PageMeta } from '../resolve'
 
 function isAllowedRouteOption(key: string): boolean {
+  console.log(key)
   return !['name', 'meta', 'path', 'component'].includes(key)
 }
 
@@ -24,13 +25,20 @@ function createRoute(meta: PageMeta): string {
     ? ',meta: ' + JSON.stringify(route.meta, null, 2)
     : ',meta: {}'
 
-  const otherOptions = Object.keys(route)
+  let otherOptions = Object.keys(route)
     .filter(isAllowedRouteOption)
     .map((key) => {
-      const content = eval(`(${route[key]})`)
-      return `,${key}: ${content}`
+      console.log(key)
+      let content = ''
+      try {
+        content = eval(`(${route[key]})`)
+      } catch(e) {
+        content = JSON.stringify(`${route[key]}`)
+      }
+      return `${key}: ${content}`
     })
-    .join(',').replace(',,', ',')
+    .join(',')
+  otherOptions = otherOptions ? `,${otherOptions}` : ''
 
   return `
   {

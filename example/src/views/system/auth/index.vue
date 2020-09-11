@@ -1,5 +1,6 @@
 <z-route>
 {
+  "name": "Auth",
   "meta": {
     "title": "权限管理",
     "handler": () => {

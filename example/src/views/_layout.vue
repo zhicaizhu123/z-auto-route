@@ -1,6 +1,8 @@
 <z-route>
 {
   "dynamic": false,
+  "redirect": "/",
+  "data": 1,
   "meta": {
     "title": "布局组件",
     "hide": true
