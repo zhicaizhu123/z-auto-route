@@ -4,6 +4,8 @@ import routes from '../../../lib/routes'
 
 Vue.use(VueRouter)
 
+console.log('routes', routes)
+
 function generatePath(routes, parentPath) {
   routes.forEach((item) => {
     item.fullUrl = `${parentPath}/${item.path}`.replace(/\/+/, '/')

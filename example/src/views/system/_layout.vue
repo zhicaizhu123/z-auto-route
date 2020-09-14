@@ -1,8 +1,12 @@
 <z-route>
 {
   "sortIndex": 0,
+  "redirect": "/system/role",
   "meta": {
     "title": "系统管理"
+  },
+  "beforeEnter": function (to, from, next) {
+    next()
   }
 }
 </z-route>
